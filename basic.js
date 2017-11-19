@@ -154,6 +154,32 @@ function mergeTree(first, second) {
 }
 
 /**
+ * 將最底部左節點相加
+ */
+function sumLeftLeave(node, isLeftNode) {
+  if (!node) return 0;
+  // 如果是左邊，沒有底下節點，就返回節點值
+  if (isLeftNode && !node.left && !node.right) {
+    return node.value;
+  }
+  // 將左右丟進計算，只算左邊，右邊繼續往下直到返回 0
+  return sumLeftLeave(node.left, true) + sumLeftLeave(node.right, false);
+}
+
+/**
+ * 將最底部右節點相加
+ */
+function sumRightLeave(node, isRightNode) {
+  if (!node) return 0;
+  // 如果是右邊，沒有底下節點，就返回節點值
+  if (isRightNode && !node.left && !node.right) {
+    return node.value;
+  }
+  // 將左右丟進計算，只算右邊，右邊繼續往下直到返回 0
+  return sumRightLeave(node.left, false) + sumRightLeave(node.right, true);
+}
+
+/**
  * 從二元樹中取得最大值
  * 原理：二元樹中的最大值會一直往右邊丟，因此可以快速找到最大值
  */
@@ -195,22 +221,35 @@ tree.push(2);
 tree.push(4);
 tree.push(5);
 tree.push(12);
+tree.push(11);
 tree.push(1);
 tree.push(97);
 
 console.log('--maxValue--');
 maxValue(tree.getRoot());
+
 console.log('--minValue--');
 minValue(tree.getRoot());
+
 console.log('--inOrderTraverse--');
 inOrderTraverse(tree.getRoot());
+
 console.log('--preOrderTraverse--');
 preOrderTraverse(tree.getRoot());
+
 console.log('--postOrderTraverse--');
 postOrderTraverse(tree.getRoot());
+
 console.log('--searchNode--');
 console.log(searchNode(tree.getRoot(), 5), searchTime);
 
+console.log('--sumLeftLeave--');
+console.log(sumLeftLeave(tree.getRoot()));
+
+console.log('--sumRightLeave--');
+console.log(sumRightLeave(tree.getRoot()));
+
+console.log('--Merge Tree--');
 // Merge Tree
 const firstTree = new BinarySearchTree();
 firstTree.push(3);
