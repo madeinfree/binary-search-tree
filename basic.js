@@ -127,6 +127,33 @@ function searchNode(node, value) {
 }
 
 /**
+ * 合併二元樹
+ */
+function mergeTree(first, second) {
+  // 建立一個變數一開始為空
+  let newNode = null;
+  // 如果左右結點都有值
+  if (first && second) {
+    // 建立一個新的節點
+    newNode = new Node();
+    // 兩個二元樹節點的值相加
+    newNode.value = first.value + second.value;
+    // 遍歷兩個二元樹的左邊節點
+    newNode.left = mergeTree(first.left, second.left);
+    // 遍歷兩個二元樹的右邊節點
+    newNode.right = mergeTree(first.right, second.right);
+  } else if (first) {
+    // 只剩下左邊，就回傳左邊節點值
+    newNode = first;
+  } else if (second) {
+    // 只剩下右邊，就回傳右邊節點值
+    newNode = second;
+  }
+  // 回傳結果
+  return newNode;
+}
+
+/**
  * 從二元樹中取得最大值
  * 原理：二元樹中的最大值會一直往右邊丟，因此可以快速找到最大值
  */
@@ -183,3 +210,15 @@ console.log('--postOrderTraverse--');
 postOrderTraverse(tree.getRoot());
 console.log('--searchNode--');
 console.log(searchNode(tree.getRoot(), 5), searchTime);
+
+// Merge Tree
+const firstTree = new BinarySearchTree();
+firstTree.push(3);
+firstTree.push(2);
+firstTree.push(4);
+const secondTree = new BinarySearchTree();
+secondTree.push(1);
+secondTree.push(5);
+// New Tree => 4, 2, 9
+const mergeResult = mergeTree(firstTree.getRoot(), secondTree.getRoot());
+console.log(mergeResult);
