@@ -202,6 +202,26 @@ function maxDepth(node) {
 }
 
 /**
+ * 二元樹左右對調
+ */
+function reverseTree(node) {
+  // 沒有節點就返回
+  if (!node) return;
+  // 臨時紀錄右邊節點
+  let temp = node.right;
+  // 將右邊改為左邊
+  node.right = node.left;
+  // 將左邊換成臨時紀錄結點值
+  node.left = temp;
+  // 一直跑左邊
+  reverseTree(node.left);
+  // 一直跑右邊
+  reverseTree(node.right);
+  // 最後返回結果
+  return node;
+}
+
+/**
  * 從二元樹中取得最大值
  * 原理：二元樹中的最大值會一直往右邊丟，因此可以快速找到最大值
  */
@@ -275,6 +295,9 @@ console.log(sumRightLeave(tree.getRoot()));
 
 console.log('--maxDepth--');
 console.log(maxDepth(tree.getRoot()));
+
+console.log('--reverseTree--');
+console.log(reverseTree(tree.getRoot()));
 
 console.log('--Merge Tree--');
 // Merge Tree
