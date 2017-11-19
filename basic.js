@@ -180,6 +180,28 @@ function sumRightLeave(node, isRightNode) {
 }
 
 /**
+ * 計算二元樹深度
+ */
+function maxDepth(node) {
+  // 沒有節點就返回
+  if (!node) return 0;
+  // 每次都是 1
+  let deepL = 1;
+  let deepR = 1;
+
+  // 如果有左邊就往左邊跑並 + 1
+  if (node.left) {
+    deepL += maxDepth(node.left);
+  }
+  // 如果有右邊就往右邊跑並 + 1
+  if (node.right) {
+    deepR += maxDepth(node.right);
+  }
+  // 回傳最多的那邊
+  return deepL > deepR ? deepL : deepR;
+}
+
+/**
  * 從二元樹中取得最大值
  * 原理：二元樹中的最大值會一直往右邊丟，因此可以快速找到最大值
  */
@@ -222,6 +244,8 @@ tree.push(4);
 tree.push(5);
 tree.push(12);
 tree.push(11);
+tree.push(14);
+tree.push(17);
 tree.push(1);
 tree.push(97);
 
@@ -248,6 +272,9 @@ console.log(sumLeftLeave(tree.getRoot()));
 
 console.log('--sumRightLeave--');
 console.log(sumRightLeave(tree.getRoot()));
+
+console.log('--maxDepth--');
+console.log(maxDepth(tree.getRoot()));
 
 console.log('--Merge Tree--');
 // Merge Tree
